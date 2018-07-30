@@ -1,0 +1,28 @@
+To connect to the Infura network run the following command in a terminal & in this directory:
+
+npm install truffle-hdwallet-provider
+
+This was tested with:
+
+node -v
+v8.9.1
+
+npm -v
+5.5.1
+
+-----------------------------------------------------------------------------------
+Used 2 flattener programs.
+-----------------------------------------------------------------------------------
+This one works with the solidity constructor() keyword:
+https://github.com/JoinColony/solidity-steamroller
+-----------------------------------------------------------------------------------
+This flattener fails with solidity constructor() keyword:
+https://github.com/BlockCatIO/solidity-flattener
+
+Install solidity_flattener.py on your system to concatenate all *.sol files to allow
+users to view source on the blockchain.
+
+usage: solidity_flattener.py [-h] [--output FILENAME]
+                             [--solc-paths SOLC_PATHS]
+                             target_solidity_file
+                             
