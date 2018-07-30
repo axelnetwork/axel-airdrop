@@ -1,0 +1,9 @@
+
+StoCoin.sol is Vit's clone and edit of indaHash.
+
+AXEL.sol was produced by a Freelancer contractor who took StoCoin, took out ICO references,
+replaced the old solidity named constructor methods with the new 'constructor' keyword,
+added the 'emit' keyword in front of Events, deleted comments and renamed at least 1 class name.
+
+AxelCoin is the original indaHash file with modifications made similar to what the Freelancer
+contractor did.

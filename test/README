@@ -1,0 +1,29 @@
+/*
+
+Here are the mnemonics used for the creation of the ethereum addressess
+
+testrpc --port 8545 --network-id 45 --db \devel\eth-blockchain
+ -u 0 -u 1 --gasPrice 200 --gasLimit 1111115141592
+ -m bicycle asthma bargain test tone whale body defense rack issue shaft anger
+
+ Available Accounts
+ ==================
+ (0) 0x7eba3223b670e79c3592b7ed1e2b55cb2327b6e4
+ (1) 0xc67c480effff19aad955e54ec4fb17d5f5446b60
+ (2) 0x155b1b0fde4c456ca7f15256ba21efa0e6a5f019
+ (3) 0xe20271bee6e5dc0ca624f1d0cc04d5ad1a6584f8
+
+ Here are the tests:
+
+ 1.  Transfer 100 tokens to user X.
+ 2.  Check that user X has 100 tokens.
+ 3.  Check that Bounty amount is less 100 tokens.
+ 4.  Pause Airdrop.  Show airdrop is paused.
+ 5.  Restart Airdrop.  Show airdrop is running.
+ 6.  Simulate all tokens are transferred out.
+ 7.  Check to see that airdrop is done now.
+ 8.  Call function of get addresses and amount of tokens sent.
+ 9.  Call function to change admin owner.
+ 10. Give admin a function to burn tokens.
+
+*/
