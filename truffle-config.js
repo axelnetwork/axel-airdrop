@@ -12,8 +12,18 @@
  *   },
  */
 
+var HDWalletProvider = require("truffle-hdwallet-provider");
+var mnemonic = "where win present rubber trap equal artwork vocal ancient fortune field velvet";
+
 module.exports = {
   networks: {
+    ropsten: {
+      provider: function() {
+         return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/AcyImYMIEbdYYWLFT6X9") // The actual api key infura gave you
+      },
+      network_id: '3',
+      gas: 4000000
+    },
     development: {
       host: "localhost",
       port: 8545,
