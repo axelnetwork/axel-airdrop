@@ -15,6 +15,13 @@ Used 2 flattener programs.
 -----------------------------------------------------------------------------------
 This one works with the solidity constructor() keyword:
 https://github.com/JoinColony/solidity-steamroller
+
+(1)  Compile files normally.
+(2)  steamroller AxelToken.sol > AxelTokenFlattened.sol
+(3)  Move files other than AxelTokenFlattened.sol & Migrations.sol out of contract
+     directory.
+(4)  Compile clean (in contracts directory).
+(5)  Copy AxelTokenFlattened.sol to testnet/mainnet
 -----------------------------------------------------------------------------------
 This flattener fails with solidity constructor() keyword:
 https://github.com/BlockCatIO/solidity-flattener
@@ -25,4 +32,3 @@ users to view source on the blockchain.
 usage: solidity_flattener.py [-h] [--output FILENAME]
                              [--solc-paths SOLC_PATHS]
                              target_solidity_file
-                             
