@@ -1,14 +1,15 @@
-pragma solidity 0.4.24;
+pragma solidity ^0.4.24;
 
 import './Admined.sol';
 import './ERC20TokenInterface.sol';
+import './Pausable.sol';
 import './SafeMath.sol';
 
 /**
 * @title ERC20Token
 * @notice Token definition contract
 */
-contract ERC20Token is Admined, ERC20TokenInterface { //Standard definition of an ERC20Token
+contract ERC20Token is ERC20TokenInterface,  Admined, Pausable { //Standard definition of an ERC20Token
     using SafeMath for uint256;
     uint256 public totalSupply;
     mapping (address => uint256) balances; //A mapping of all balances per address
@@ -28,7 +29,7 @@ contract ERC20Token is Admined, ERC20TokenInterface { //Standard definition of a
     * @param _to The address to transfer to.
     * @param _value The amount to be transferred.
     */
-    function transfer(address _to, uint256 _value) public returns (bool success) {
+    function transfer(address _to, uint256 _value) whenNotPaused public returns (bool success) {
         require(_to != address(0)); //If you dont want that people destroy token
         require(frozen[msg.sender]==false);
         balances[msg.sender] = balances[msg.sender].sub(_value);
@@ -43,7 +44,7 @@ contract ERC20Token is Admined, ERC20TokenInterface { //Standard definition of a
     * @param _to The address to transfer to.
     * @param _value The amount to be transferred.
     */
-    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+    function transferFrom(address _from, address _to, uint256 _value) whenNotPaused public returns (bool success) {
         require(_to != address(0)); //If you dont want that people destroy token
         require(frozen[_from]==false);
         allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);
@@ -79,7 +80,7 @@ contract ERC20Token is Admined, ERC20TokenInterface { //Standard definition of a
     * @param _target The address to being frozen.
     * @param _flag The frozen status to set.
     */
-    function setFrozen(address _target,bool _flag) onlyAdmin public {
+    function setFrozen(address _target,bool _flag) onlyAdmin whenNotPaused public {
         frozen[_target]=_flag;
         emit FrozenStatus(_target,_flag);
     }

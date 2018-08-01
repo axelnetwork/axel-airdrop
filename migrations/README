@@ -1,4 +1,0 @@
-
-/*
-solidity_flattener --output AxelFlat.sol XTrmCoinCrowdsale.sol
-*/

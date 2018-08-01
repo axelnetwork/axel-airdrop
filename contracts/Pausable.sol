@@ -12,6 +12,10 @@ contract Pausable is Admined {
 
   bool public paused = false;
 
+  constructor() internal {
+    emit Unpause();
+  }
+
   /**
    * @dev Modifier to make a function callable only when the contract is not paused.
    */
@@ -31,10 +35,10 @@ contract Pausable is Admined {
   /**
    * @dev called by the owner to pause, triggers stopped state
    */
-  function pause() onlyAdmin whenNotPaused public {
-    paused = true;
-    emit Pause();
-  }
+   function pause() onlyAdmin whenNotPaused public {
+     paused = true;
+     emit Pause();
+   }
 
   /**
    * @dev called by the owner to unpause, returns to normal state

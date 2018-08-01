@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity ^0.4.24;
 
 import './ERC20Token.sol';
 import './Token.sol';
@@ -9,17 +9,23 @@ import './Token.sol';
 * @dev ERC20 Token compliant
 */
 contract AxelToken is ERC20Token {
-    string public name = 'AXEL';
-    uint8 public decimals = 18;
-    string public symbol = 'AXEL';
+
+    string public name = 'BRUCE4';
+    uint8 public decimals = 0;
+    string public symbol = 'BRUCE4';
     string public version = '1';
+
+    //string public name = 'AXEL';
+    //uint8 public decimals = 18;
+    //string public symbol = 'AXEL';
+    //string public version = '1';
 
     /**
     * @notice token contructor.  250000000
     */
     constructor() public {
         //totalSupply = 50000000000 * 10 ** uint256(decimals); //50.000.000.000 tokens initial supply;
-        totalSupply = 250000000 * 10 ** uint256(0); //50.000.000.000 tokens initial supply;
+        totalSupply = 250000000 * 10 ** uint256(decimals); //50.000.000.000 tokens initial supply;
         balances[msg.sender] = totalSupply;
         emit Transfer(0, msg.sender, totalSupply);
     }
@@ -32,42 +38,10 @@ contract AxelToken is ERC20Token {
         _address.transfer(msg.sender,remainder); //Transfer tokens to admin
     }
 
-    // This is the array of token holder addresses
-    address[] private addressLUT;
-
-    /**
-      Get the size of the addressLUTSize Array
-    */
-    function addressLUTSize() onlyAdmin public constant returns (uint) {
-        return addressLUT.length;
-    }
-
-    /**
-      Get address value at index of addressLUT
-    */
-    function valueAtAddressLUT(uint index) onlyAdmin public constant returns (address) {
-        return addressLUT[index];
-    }
-
-    /**
-    * @dev transfer token to a specified address
-    * @param _to The address to transfer to.
-    * @param _value The amount to be transferred.
-    */
-    function transfer(address _to, uint256 _value) public returns (bool success) {
-        require(_to != address(0)); //If you dont want that people destroy token
-        require(frozen[msg.sender]==false);
-        balances[msg.sender] = balances[msg.sender].sub(_value);
-        balances[_to] = balances[_to].add(_value);
-        addressLUT.push(_to);
-        emit Transfer(msg.sender, _to, _value);
-        return true;
-    }
-
     /**
       Allow the admin to burn tokens
     */
-    function burn(uint256 _value) onlyAdmin public {
+    function burn(uint256 _value) onlyAdmin whenNotPaused public {
       require(_value <= balances[msg.sender]);
 
       balances[msg.sender] = balances[msg.sender].sub(_value);

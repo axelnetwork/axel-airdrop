@@ -1,4 +1,3 @@
-
 /*
 
 1. Transfer 100 tokens to user x.
@@ -67,13 +66,15 @@ contract('AxelToken', function(accounts) {
   // bump up amount
   //amount = amount*10;
 
-  it("AirDrop " + amount + " tokens to aother user", function() {
+  // Used in pause/start test later
+  var account_1_ending_balance;
 
+  it("Now airDrop " + amount + " tokens to ANOTHER user ", function() {
     var axel;
 
     var account_1_starting_balance;
+
     var account_3_starting_balance;
-    var account_1_ending_balance;
     var account_3_ending_balance;
 
     return AxelToken.deployed().then(function(instance) {
@@ -99,30 +100,42 @@ contract('AxelToken', function(accounts) {
     });
   }); // it
 
-  it("Getting size of address array ", function() {
+
+  it("Test pause/start ", function() {
+
     var axel;
-    var index = 1;
-    return AxelToken.deployed().then(function(instance) {
+    var amount = 888;
+
+    return AxelToken.deployed().then(async function(instance) {
       axel = instance;
-      return axel.addressLUTSize.call();
-    }).then(function(size) {
-      console.log("addressLUTSize = " + size )
-      return axel.valueAtAddressLUT.call(size-1);
-    }).then(function(address_value) {
-      console.log("addressLUT[1] = " + address_value )
-      return axel.balanceOf.call(address_value);
-    }).then(function(balance) {
-      console.log("value @ addressLUT[1] = " + balance )
-      return axel.balanceOf.call(account_1);
-    }).then(function(balance) {
-      console.log("Remaining Balance = " + balance );
+      //await axel.pause()
+      try {
+          await axel.transfer(account_2, amount, {from: account_1});
+          assert.fail()
+      } catch (error) {
+          assert(error.toString().includes('invalid opcode'), error.toString())
+      }
+
+      //const fundRaiseAddress = await fundRaise.address
+      //assert.equal(web3.eth.getBalance(fundRaiseAddress).toNumber(), 0)
+
+      //await fundRaise.unpause()
+      //await fundRaise.sendTransaction({ value: 1e+18, from: donor })
+
+      //console.log(web3.fromWei(web3.eth.getBalance(web3.eth.accounts[0])));
+      console.log(axel.balanceOf.call(account_1));
+
+      //assert.equal(web3.eth.getBalance(account_1).toNumber(), account_1_ending_balance)
+
+
     });
   }); // it
-
 
   /**
     Now burn the remaining tokens except for a handful.
   */
+
+  /*
   var keep = 100;
   it("Now burn the remaining tokens except for " + keep, function() {
     var axel;
@@ -138,5 +151,16 @@ contract('AxelToken', function(accounts) {
         console.log("whatsLeft = " + whatsLeft );
     });
   }); // it
+
+  it(" ", function() {
+    var axel;
+    return AxelToken.deployed().then(function(instance) {
+      axel = instance;
+      return axel.balanceOf.call(account_1);
+    }).then(function(balance) {
+      console.log("Remaining Balance = " + balance );
+    });
+  });
+  */
 
 });
