@@ -22,7 +22,7 @@ module.exports = {
          return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/AcyImYMIEbdYYWLFT6X9") // The actual api key infura gave you
       },
       network_id: '3',
-      gas: 4000000
+      gas: 4500000
     },
     development: {
       host: "localhost",

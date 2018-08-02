@@ -10,9 +10,9 @@ import './Token.sol';
 */
 contract AxelToken is ERC20Token {
 
-    string public name = 'BRUCE4';
-    uint8 public decimals = 0;
-    string public symbol = 'BRUCE4';
+    string public name = 'AXEL-AIRDROP';
+    uint8 public decimals = 18;
+    string public symbol = 'AXEL';
     string public version = '1';
 
     //string public name = 'AXEL';
