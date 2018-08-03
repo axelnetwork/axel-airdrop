@@ -15,11 +15,6 @@ contract AxelToken is ERC20Token {
     string public symbol = 'AXEL';
     string public version = '1';
 
-    //string public name = 'AXEL';
-    //uint8 public decimals = 18;
-    //string public symbol = 'AXEL';
-    //string public version = '1';
-
     /**
     * @notice token contructor.  250000000
     */

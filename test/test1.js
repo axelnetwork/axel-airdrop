@@ -63,10 +63,6 @@ contract('AxelToken', function(accounts) {
     });
   }); // it
 
-  // bump up amount
-  //amount = amount*10;
-
-  // Used in pause/start test later
   var account_1_ending_balance;
 
   it("Now airDrop " + amount + " tokens to ANOTHER user ", function() {
@@ -101,66 +97,53 @@ contract('AxelToken', function(accounts) {
   }); // it
 
 
-  it("Test pause/start ", function() {
+  /*
 
-    var axel;
-    var amount = 888;
+  1. Test Pause/Un-pause function.
+  2. Burn function was tested in the browser @
+     https://ropsten.etherscan.io/token/0x18218840f11abdf2b5097806706796829135a22e
 
-    return AxelToken.deployed().then(async function(instance) {
-      axel = instance;
-      //await axel.pause()
+  */
+
+  it("Pause will now be called with a Transfer after the Pause.", async function () {
+
+      var amount = 888;
+      console.log("Attempting to transfer "+ amount + " tokens.");
+
+      let axel = await AxelToken.deployed();
+      let balance_before = await axel.balanceOf.call(account_1);
+
+      await axel.pause();
+
       try {
           await axel.transfer(account_2, amount, {from: account_1});
-          assert.fail()
+          assert.fail('Transfer expected to fail.');
       } catch (error) {
           assert(error.toString().includes('invalid opcode'), error.toString())
       }
 
-      //const fundRaiseAddress = await fundRaise.address
-      //assert.equal(web3.eth.getBalance(fundRaiseAddress).toNumber(), 0)
+      let balance_after = await axel.balanceOf.call(account_1);
+      console.log("balance_before = "+ balance_before);
+      console.log("balance_after = "+ balance_after);
+      assert.equal(balance_before+0, balance_after+0, "balance_before == balance_after ");
 
-      //await fundRaise.unpause()
-      //await fundRaise.sendTransaction({ value: 1e+18, from: donor })
+      // Now unpause it
 
-      //console.log(web3.fromWei(web3.eth.getBalance(web3.eth.accounts[0])));
-      console.log(axel.balanceOf.call(account_1));
+      console.log("Unpausing now.");
+      let balance_before_1 = await axel.balanceOf.call(account_1);
 
-      //assert.equal(web3.eth.getBalance(account_1).toNumber(), account_1_ending_balance)
+      await axel.unpause();
 
+      try {
+          await axel.transfer(account_2, amount, {from: account_1});
+      } catch (error) {
+          assert(error.toString().includes('invalid opcode'), error.toString())
+      }
+
+      let balance_after_1 = await axel.balanceOf.call(account_1);
+      console.log("balance_before_1 = "+ balance_before_1.toNumber()); //balance.toNumber()
+      console.log("balance_after_1 = "+ balance_after_1.toNumber());
+      assert.equal(balance_before_1.toNumber(), balance_after_1.toNumber()+amount, "balance_before_1 == balance_after_1 + " + amount);
 
     });
-  }); // it
-
-  /**
-    Now burn the remaining tokens except for a handful.
-  */
-
-  /*
-  var keep = 100;
-  it("Now burn the remaining tokens except for " + keep, function() {
-    var axel;
-    return AxelToken.deployed().then(function(instance) {
-      axel = instance;
-      return axel.balanceOf.call(account_1);
-    }).then(function(balance) {
-      console.log("Remaining Balance = " + balance );
-      return axel.burn.call(balance);
-    }).then(function() {
-        return axel.balanceOf.call(account_1);
-    }).then(function(whatsLeft) {
-        console.log("whatsLeft = " + whatsLeft );
-    });
-  }); // it
-
-  it(" ", function() {
-    var axel;
-    return AxelToken.deployed().then(function(instance) {
-      axel = instance;
-      return axel.balanceOf.call(account_1);
-    }).then(function(balance) {
-      console.log("Remaining Balance = " + balance );
-    });
-  });
-  */
-
 });
