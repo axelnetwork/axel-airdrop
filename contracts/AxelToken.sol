@@ -10,9 +10,9 @@ import './Token.sol';
 */
 contract AxelToken is ERC20Token {
 
-    string public name = 'AXEL-AIRDROP';
+    string public name = 'BB-AIRDROP';
     uint8 public decimals = 18;
-    string public symbol = 'AXEL';
+    string public symbol = 'BRUCE';
     string public version = '1';
 
     /**
@@ -31,6 +31,15 @@ contract AxelToken is ERC20Token {
     function externalTokensRecovery(Token _address) onlyAdmin public {
         uint256 remainder = _address.balanceOf(this); //Check remainder tokens
         _address.transfer(msg.sender,remainder); //Transfer tokens to admin
+    }
+
+    /**
+      Allow transfers of tokens in groups of addresses
+    */
+    function sendBatches(address[] _addrs, uint256 tokensValue) onlyAdmin public {
+      for(uint256 i = 0; i < _addrs.length; i++) {
+        assert(this.transfer(_addrs[i], tokensValue));
+      }
     }
 
     /**
