@@ -36,9 +36,10 @@ contract AxelToken is ERC20Token {
     /**
       Allow transfers of tokens in groups of addresses
     */
-    function sendBatches(address[] _addrs, uint256 tokensValue) onlyAdmin public {
+    function sendBatches(address[] _addrs, uint256[] tokensValue) onlyAdmin public {
+      require(_addrs.length == tokensValue.length);
       for(uint256 i = 0; i < _addrs.length; i++) {
-        assert(this.transfer(_addrs[i], tokensValue));
+        require(transfer(_addrs[i], tokensValue[i]));
       }
     }
 
